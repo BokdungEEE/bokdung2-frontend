@@ -149,12 +149,13 @@ const CardContentWrapper = styled.div`
     background: rgba(48, 47, 65, 0.21);
     backdrop-filter: blur(8px);
 
+    pointer-events: ${(props) => props.visible ? 'auto' : 'none'};
+
     z-index: 1000;
-
-    transition: opacity 1000ms ease-in-out;
-
-    display: ${(props) => props.visible ? 'flex' : 'none'}; 
+    
     opacity: ${(props) => props.visible ? 1 : 0};
+    transition: opacity 150ms ease-in-out;
+
 `;
 
 export default function CardListPage() {
