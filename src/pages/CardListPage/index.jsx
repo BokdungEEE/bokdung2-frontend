@@ -9,6 +9,7 @@ import { ReactComponent as FlipIcon } from "./assets/flip.svg";
 import { useShowTypeState } from "./states/showTypeState";
 import { useState } from "react";
 import { styled } from "styled-components";
+import LargeButton from "./components/LargeButton";
 
 const BubbleWrapper = styled.div`
     position: absolute;
@@ -30,7 +31,9 @@ const BackgroundBubble = styled.div`
     border-radius: 298px;
     background: rgba(220, 233, 245, 0.04);
     box-shadow: 0px 0px 36px 0px #DCE9F5 inset;
+
     backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
 
     display: flex;
     flex-direction: column;
@@ -55,7 +58,7 @@ const DescriptionWrapper = styled.div`
     color: var(--white, #DCE9F5);
     text-align: center;
 
-    font-family: PyeongChangPeace;
+    font-family: PyeongChang;
     font-size: 15px;
     font-style: normal;
     font-weight: 400;
@@ -67,7 +70,7 @@ const RoundWrapper = styled.div`
     width: 100vw;
     display: flex;
     flex-direction: row;
-    justify-content: center;
+        justify-content: center;
 
     position: absolute;
     overflow: hidden;
@@ -100,6 +103,7 @@ const MiddleCardWrapper = styled.div`
     opacity: ${(prop) => prop.$visible ? 1 : 0};
     transition: opacity 100ms ease-in-out;
     
+    z-index: 100;
 `;
 
 const StyledCard = styled(Card)`
@@ -153,6 +157,7 @@ const CardContentWrapper = styled.div`
     
     background: rgba(48, 47, 65, 0.21);
     backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
 
     display: block;
     pointer-events: ${(prop) => prop.$visible ? 'auto' : 'none'};
@@ -180,9 +185,21 @@ const FlipIconWrapper = styled.div`
     align-items: center;
 `;
 
+const ButtonWrapper = styled.div`
+    position: absolute;
+    top: 690px;
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    opacity: ${(prop) => prop.$visible ? 1 : 0};
+    transition: opacity 100ms ease-in-out;
+`;
+
 export default function CardListPage() {
 
-    const { showType } = useShowTypeState();
+    const { showType, setShowType } = useShowTypeState();
 
     const [cardType,] = useState("course");
     const [cardContentShow, setCardContentShow] = useState(false);
@@ -212,9 +229,14 @@ export default function CardListPage() {
         setLargeCardFlipped(prevState => !prevState);
     };
 
+    const onClickLargeButton = () => {
+        setShowType("cardgrid");
+    };
+
     return (
         <div>
             <TopBackground />
+
             <Header />
             <BubbleWrapper>
                 <BackgroundBubble>
@@ -233,6 +255,10 @@ export default function CardListPage() {
             <RoundWrapper>
                 <BlueRounded />
             </RoundWrapper>
+
+            <ButtonWrapper $visible={showType == "card"}>
+                <LargeButton text="운세카드 모아보기" onClick={() => onClickLargeButton()} />
+            </ButtonWrapper>
 
             <MiddleCardWrapper $visible={showType == "card"}>
                 <MiddleCard type={cardType} text="ㅋㅋ" author="우효" />

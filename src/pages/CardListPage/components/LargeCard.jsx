@@ -63,7 +63,7 @@ const ContentWrapper = styled.div`
 
     color: var(--white, #DCE9F5);
     /* PyeongChang/body 2 */
-    font-family: PyeongChangPeace;
+    font-family: PyeongChang;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;

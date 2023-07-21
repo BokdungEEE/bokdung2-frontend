@@ -18,6 +18,7 @@ const HeaderWrapper = styled.div`
     align-items: flex-start;
 
     backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
 `;
 
 const HelperStyledIcon = styled(HelperIcon)`

@@ -25,9 +25,10 @@ const CardContainer = styled.div`
     position: absolute;
     
     transition: 400ms ease-in-out;
-    transform-style: preserve-3d;
 
     transform: rotateY(${(prop) => prop.$rotate ? 180 : 0}deg);
+    transform-style: preserve-3d;
+    
 `;
 
 const FlippedCard = styled.div`
@@ -50,6 +51,7 @@ const FlipWrapper = styled.div`
     backface-visibility: hidden;
 
     transform: rotateY(${(prop) => prop.$rotate ? 180 : 0}deg);
+    transform-style: preserve-3d;
 `;
 
 const ContentWrapper = styled.div`
@@ -66,7 +68,7 @@ const ContentWrapper = styled.div`
 
     color: var(--white, #DCE9F5);
     /* PyeongChang/body 2 */
-    font-family: PyeongChangPeace;
+    font-family: PyeongChang;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
