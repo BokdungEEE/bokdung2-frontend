@@ -1,11 +1,14 @@
-import { styled } from "styled-components";
+import MiddleCard from "./components/MiddleCard";
+import LargeCard from "./components/LargeCard";
+import SmallCard from "./components/SmallCard";
+import CardGrid from "./components/CardGrid";
 import Header from "./components/Header";
 import Card from "./components/Card";
-import CardGrid from "./components/CardGrid";
-import MiddleCard from "./components/MiddleCard";
-import { useState } from "react";
+
+import { ReactComponent as FlipIcon } from "./assets/flip.svg";
 import { useShowTypeState } from "./states/showTypeState";
-import SmallCard from "./components/SmallCard";
+import { useState } from "react";
+import { styled } from "styled-components";
 
 const BubbleWrapper = styled.div`
     position: absolute;
@@ -94,7 +97,7 @@ const MiddleCardWrapper = styled.div`
     flex-direction: row;
     justify-content: center;
 
-    opacity: ${(props) => props.visible ? 1 : 0};
+    opacity: ${(prop) => prop.$visible ? 1 : 0};
     transition: opacity 100ms ease-in-out;
     
 `;
@@ -120,7 +123,7 @@ const CardListWrapper = styled.div`
     top: 300px;
     width: 100vw;
 
-    opacity: ${(props) => props.visible ? 1 : 0};
+    opacity: ${(prop) => prop.$visible ? 1 : 0};
     transition: opacity 100ms ease-in-out;
 
     display: flex;
@@ -131,7 +134,7 @@ const CardListWrapper = styled.div`
 const CardListGrid = styled.div`
     width: 314px;
     
-    display: ${(props) => props.visible ? 'grid' : 'none'};
+    display: ${(prop) => prop.$visible ? 'grid' : 'none'};
 
 	grid-template-columns: 100px 100px 100px;
     grid-row-gap: 14px;
@@ -144,31 +147,69 @@ const CardContentWrapper = styled.div`
     width: 100vw;
     height: 100vh;
 
+    padding-top: 30px;
+
     position: fixed;
     
     background: rgba(48, 47, 65, 0.21);
     backdrop-filter: blur(8px);
 
-    pointer-events: ${(props) => props.visible ? 'auto' : 'none'};
+    display: block;
+    pointer-events: ${(prop) => prop.$visible ? 'auto' : 'none'};
 
     z-index: 1000;
     
-    opacity: ${(props) => props.visible ? 1 : 0};
+    opacity: ${(prop) => prop.$visible ? 1 : 0};
     transition: opacity 150ms ease-in-out;
 
+    display: flex;
+    
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+`;
+
+const FlipIconWrapper = styled.div`
+    width: 50px;
+    height: 50px;
+    
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `;
 
 export default function CardListPage() {
 
     const { showType } = useShowTypeState();
+
     const [cardType,] = useState("course");
     const [cardContentShow, setCardContentShow] = useState(false);
+    const [largeCardFlipped, setLargeCardFlipped] = useState(false);
 
     const cardCount = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
 
     const onClickSmallCard = () => {
-        console.log("큭큭");
         setCardContentShow(true);
+    };
+
+    const onClickLargeCard = () => {
+        setLargeCardFlipped(prevState => !prevState);
+    };
+
+    const onClickCardContentWrapper = () => {
+        setCardContentShow(false);
+    };
+
+    /**
+     * 
+     * @param {React.MouseEvent<HTMLDivElement, MouseEvent>} e 
+     */
+    const onClickFlipIcon = (e) => {
+        e.stopPropagation();
+
+        setLargeCardFlipped(prevState => !prevState);
     };
 
     return (
@@ -193,12 +234,12 @@ export default function CardListPage() {
                 <BlueRounded />
             </RoundWrapper>
 
-            <MiddleCardWrapper visible={showType == "card"}>
-                <MiddleCard type={cardType} />
+            <MiddleCardWrapper $visible={showType == "card"}>
+                <MiddleCard type={cardType} text="ㅋㅋ" author="우효" />
             </MiddleCardWrapper>
 
-            <CardListWrapper visible={showType == "cardgrid"}>
-                <CardListGrid visible={showType == "cardgrid"}>
+            <CardListWrapper $visible={showType == "cardgrid"}>
+                <CardListGrid $visible={showType == "cardgrid"}>
                     {
                         cardCount.map((value, index) => {
                             return <SmallCard key={index} type={cardType} onClick={() => onClickSmallCard()} />
@@ -207,8 +248,12 @@ export default function CardListPage() {
                 </CardListGrid>
             </CardListWrapper>
 
-            <CardContentWrapper visible={cardContentShow}>
-                ㅋㅋ 빠큐
+            <CardContentWrapper $visible={cardContentShow} onClick={() => onClickCardContentWrapper()}>
+                <LargeCard type="love" onClick={() => onClickLargeCard()} flippable={false} flip={largeCardFlipped}
+                    text="친구야 ㅎㅇ" author="엉" />
+                <FlipIconWrapper onClick={(e) => onClickFlipIcon(e)}>
+                    <FlipIcon />
+                </FlipIconWrapper>
             </CardContentWrapper>
         </div >
     );

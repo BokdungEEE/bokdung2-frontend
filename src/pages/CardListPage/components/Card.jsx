@@ -4,7 +4,7 @@ import { useShowTypeState } from "../states/showTypeState";
 import { styled } from "styled-components";
 
 const StyledCardIcon = styled(CardIcon)`
-    fill: ${(prop) => prop.clicked ? "#D0D5E1" : "#53565E"};
+    fill: ${(prop) => prop.$clicked ? "#D0D5E1" : "#53565E"};
     
     transition: fill 0.1s ease-in-out;  
 `;
@@ -21,10 +21,10 @@ export default function Card({ onClick }) {
         onClick?.call();
     };
 
-    return <StyledCardIcon onClick={onIconClicked} clicked={showType == "card"} />;
+    return <StyledCardIcon onClick={onIconClicked} $clicked={showType == "card"} />;
 
 }
 
 Card.propTypes = {
-    onClick: PropTypes.func.isRequired
+    onClick: PropTypes.func
 }

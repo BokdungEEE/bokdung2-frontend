@@ -1,38 +1,35 @@
-import PropTypes from "prop-types"
+import PropTypes from 'prop-types';
 
-import { styled } from "styled-components"
-import { useState } from "react";
-
-import { ReactComponent as CourseCard } from "../assets/middlecards/course.svg";
-import { ReactComponent as HealthCard } from "../assets/middlecards/health.svg";
-import { ReactComponent as LoveCard } from "../assets/middlecards/love.svg";
-import { ReactComponent as MoneyCard } from "../assets/middlecards/money.svg";
-import { ReactComponent as PromotionCard } from "../assets/middlecards/promotion.svg";
-import { ReactComponent as TestCard } from "../assets/middlecards/test.svg";
-import { ReactComponent as LuckyCard } from "../assets/middlecards/lucky.svg";
+import { ReactComponent as CourseCard } from "../assets/largecards/course.svg";
+import { ReactComponent as HealthCard } from "../assets/largecards/health.svg";
+import { ReactComponent as LoveCard } from "../assets/largecards/love.svg";
+import { ReactComponent as MoneyCard } from "../assets/largecards/money.svg";
+import { ReactComponent as PromotionCard } from "../assets/largecards/promotion.svg";
+import { ReactComponent as TestCard } from "../assets/largecards/test.svg";
+import { ReactComponent as LuckyCard } from "../assets/largecards/lucky.svg";
+import { styled } from 'styled-components';
+import { useState } from 'react';
 
 const CardContainer = styled.div`
-    width: 220px;
-    height: 330px;
+    width: 270px;
+    height: 400px;
 
-    border-radius: 24px;
+    border-radius: 24px;    
     background: var(--black, #32363A);
 
     display: flex;
     justify-content: center;
     align-items: center;
-
-    position: absolute;
     
     transition: 400ms ease-in-out;
     transform-style: preserve-3d;
 
-    transform: rotateY(${(prop) => prop.$rotate ? 180 : 0}deg);
+    transform: rotateY(${(props) => props.$rotate ? 180 : 0}deg);
 `;
 
 const FlippedCard = styled.div`
-    width: 220px;
-    height: 330px;
+    width: 270px;
+    height: 400px;
 
     display: flex;
     flex-direction: column;
@@ -49,15 +46,15 @@ const FlipWrapper = styled.div`
     position: absolute;
     backface-visibility: hidden;
 
-    transform: rotateY(${(prop) => prop.$rotate ? 180 : 0}deg);
+    transform: rotateY(${(props) => props.$rotate ? 180 : 0}deg);
 `;
 
 const ContentWrapper = styled.div`
     user-select: none; /* Likely future */
 
     margin: 20px;
-    width: 180px;
-    height: 320px;
+    width: 230px;
+    height: 360px;
 
     display: flex;
     flex-direction: column;
@@ -109,20 +106,38 @@ UnflippedCardRender.propTypes = {
 
 /**
  * 
- * @param {{ type: "course" | "health" | "love" | "money" | "promotion" | "test" | "lucky", flippable: boolean, flip: boolean, text: string, author: string }} param0 
+ * @param {{ 
+ *      type: "course" | "health" | "love" | "money" | "promotion" | "test" | "lucky", 
+ *      flippable: boolean, 
+ *      flip: boolean, 
+ *      onClick: (flipped: boolean) => void,
+ *      text: string,
+ *      author: string }} param0 
  * @returns 
  */
-export default function MiddleCard({ type, flippable = true, flip = true, text, author }) {
+export default function LargeCard({ type, flippable = true, flip = true, onClick, text, author }) {
     const [flipped, setFlipped] = useState(true);
 
-    const onCardClicked = () => {
+    /**
+     * 
+     * @param {React.MouseEvent<HTMLDivElement, MouseEvent>} e 
+     */
+    const onCardClicked = (e) => {
+        e.stopPropagation();
+
         if (flippable) {
-            setFlipped(prevState => !prevState);
+            setFlipped(prevState => {
+                onClick(!prevState);
+                return !prevState;
+            });
+        } else {
+            onClick(flipped);
         }
     };
 
     return (
-        <CardContainer onClick={() => onCardClicked()} $rotate={flippable ? flipped : flip}>
+        <CardContainer onClick={(e) => onCardClicked(e)} $rotate={
+            flippable ? flipped : flip}>
             <FlipWrapper $rotate={true}>
                 <UnflippedCardRender type={type} />
             </FlipWrapper>
@@ -141,10 +156,11 @@ export default function MiddleCard({ type, flippable = true, flip = true, text, 
     )
 }
 
-MiddleCard.propTypes = {
+LargeCard.propTypes = {
     type: PropTypes.oneOf(["course", "health", "love", "money", "promotion", "test"]).isRequired,
     flippable: PropTypes.bool,
     flip: PropTypes.bool,
+    onClick: PropTypes.func,
     text: PropTypes.string,
     author: PropTypes.string
 };
