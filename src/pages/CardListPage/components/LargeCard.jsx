@@ -112,10 +112,12 @@ UnflippedCardRender.propTypes = {
  *      flip: boolean, 
  *      onClick: (flipped: boolean) => void,
  *      text: string,
- *      author: string }} param0 
+ *      author: string,
+ *      children: React.ReactNode
+ *  }} param0 
  * @returns 
  */
-export default function LargeCard({ type, flippable = true, flip = true, onClick, text, author }) {
+export default function LargeCard({ type, flippable = true, flip = true, onClick, text, author, children }) {
     const [flipped, setFlipped] = useState(true);
 
     /**
@@ -144,8 +146,8 @@ export default function LargeCard({ type, flippable = true, flip = true, onClick
             <FlipWrapper $rotate={false}>
                 <FlippedCard>
                     <ContentWrapper>
+                        {children}
                         {text}
-
                         <AuthorWrapper>
                             {author}
                         </AuthorWrapper>
@@ -162,5 +164,6 @@ LargeCard.propTypes = {
     flip: PropTypes.bool,
     onClick: PropTypes.func,
     text: PropTypes.string,
-    author: PropTypes.string
+    author: PropTypes.string,
+    children: PropTypes.node
 };
