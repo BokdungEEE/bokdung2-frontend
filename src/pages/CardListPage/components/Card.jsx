@@ -1,29 +1,30 @@
-import { useState } from "react"
 import { ReactComponent as CardIcon } from "../assets/card.svg"
-import { ReactComponent as ClickedCardIcon } from "../assets/clicked_card.svg"
 import PropTypes from 'prop-types';
+import { useShowTypeState } from "../states/showTypeState";
+import { styled } from "styled-components";
+
+const StyledCardIcon = styled(CardIcon)`
+    fill: ${(prop) => prop.$clicked ? "#D0D5E1" : "#53565E"};
+    
+    transition: fill 0.1s ease-in-out;  
+`;
 
 /**
  * 
- * @param {{onClick: (state: boolean) => void}} parameter 
+ * @param {{onClick: () => void}} parameter 
  */
 export default function Card({ onClick }) {
-    const [clickedState, setClickedState] = useState(false);
+    const { showType, setShowType } = useShowTypeState();
 
     const onIconClicked = () => {
-        setClickedState(prevState => {
-            onClick(!prevState);
-            return !prevState
-        });
+        setShowType("card");
+        onClick?.call();
     };
 
-    if (clickedState) {
-        return <ClickedCardIcon onClick={onIconClicked} />;
-    } else {
-        return <CardIcon onClick={onIconClicked} />;
-    }
+    return <StyledCardIcon onClick={onIconClicked} $clicked={showType == "card"} />;
+
 }
 
 Card.propTypes = {
-    onClick: PropTypes.func.isRequired
+    onClick: PropTypes.func
 }

@@ -1,29 +1,29 @@
-import { useState } from "react"
 import { ReactComponent as CardGridIcon } from "../assets/cardgrid.svg"
-import { ReactComponent as ClickedCardGridIcon } from "../assets/clicked_cardgrid.svg"
 import PropTypes from 'prop-types';
+import { useShowTypeState } from "../states/showTypeState";
+import { styled } from "styled-components";
+
+const StyledCardGridIcon = styled(CardGridIcon)`
+    fill: ${(prop) => prop.$clicked ? "#D0D5E1" : "#53565E"};
+
+    transition: fill 0.1s ease-in-out;
+`;
 
 /**
  * 
- * @param {{onClick: (state: boolean) => void}} parameter 
+ * @param {{onClick: () => void}} parameter 
  */
 export default function CardGrid({ onClick }) {
-    const [clickedState, setClickedState] = useState(false);
+    const { showType, setShowType } = useShowTypeState();
 
     const onIconClicked = () => {
-        setClickedState(prevState => {
-            onClick(!prevState);
-            return !prevState
-        });
+        setShowType("cardgrid");
+        onClick?.call();
     };
 
-    if (clickedState) {
-        return <ClickedCardGridIcon onClick={onIconClicked} />;
-    } else {
-        return <CardGridIcon onClick={onIconClicked} />;
-    }
+    return <StyledCardGridIcon onClick={onIconClicked} $clicked={showType == "cardgrid"} />;
 }
 
 CardGrid.propTypes = {
-    onClick: PropTypes.func.isRequired
+    onClick: PropTypes.func
 }
