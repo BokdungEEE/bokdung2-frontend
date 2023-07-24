@@ -153,7 +153,7 @@ export default function LetterPage() {
             <BackgroundCircle />
         </Background>
 
-        <Header backactivate={true} backurl="/login" />
+        <Header backactivate={true} backurl="/cardselect" />
 
         <DescriptionWrapper>
             친구에게 보낼 메시지를 입력해주세요

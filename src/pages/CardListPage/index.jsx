@@ -75,6 +75,8 @@ const MiddleCardWrapper = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: center;
+    
+    pointer-events: ${(prop) => prop.$visible ? 'auto' : 'none'};
 
     opacity: ${(prop) => prop.$visible ? 1 : 0};
     transition: opacity 100ms ease-in-out;
@@ -89,7 +91,7 @@ const StyledCard = styled(Card)`
 const StyledCardGrid = styled(CardGrid)``;
 
 const TopBackground = styled.div`
-    position: absolute;
+    position: fixed;
     background-color: #32363A;
 
     width: 100vw;
@@ -175,7 +177,7 @@ const ButtonWrapper = styled.div`
 `;
 
 const BubbleWrapper = styled.div`
-    position: fixed;
+position: relative;
     top: 115px;
 `;
 

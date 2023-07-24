@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Bubble from "../CardListPage/components/Bubble";
 import SmallCard from "../CardListPage/components/SmallCard";
 import LargeButton from "../CardListPage/components/LargeButton";
+import Header from "../CardListPage/components/Header";
 
 const Background = styled.div`
     position: fixed;
@@ -86,6 +87,7 @@ const ButtonWrapper = styled.div`
 
 export default function SentPage() {
     return <>
+        <Header />
         <Background />
         <RoundWrapper>
             <BlueRounded />

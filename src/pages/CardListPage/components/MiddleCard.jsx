@@ -136,10 +136,10 @@ UnflippedCardRender.propTypes = {
 
 /**
  * 
- * @param {{ type: "course" | "health" | "love" | "money" | "promotion" | "test" | "lucky", flippable: boolean, flip: boolean, text: string, author: string }} param0 
+ * @param {{ type: "course" | "health" | "love" | "money" | "promotion" | "test" | "lucky", flippable: boolean, flip: boolean, text: string, author: string, checkable: boolean, onCheck: (checked: boolean)=>void, checked: boolean }} param0 
  * @returns 
  */
-export default function MiddleCard({ type, flippable = true, flip = true, text, author }) {
+export default function MiddleCard({ type, flippable = true, flip = true, text, author, checkable = false, onCheck, checked }) {
     const [flipped, setFlipped] = useState(true);
 
     const onCardClicked = () => {
@@ -148,14 +148,21 @@ export default function MiddleCard({ type, flippable = true, flip = true, text, 
         }
     };
 
+    const onCardChecked = () => {
+        if (checkable) {
+            onCheck(!checked);
+        }
+    }
+
     return (
         <CardContainer onClick={() => onCardClicked()} $rotate={flippable ? flipped : flip}>
             <FlipWrapper $rotate={true}>
                 <UnflippedCardRender type={type} />
 
-                <CheckWrapper>
-                    <CheckRender checked={flipped} onClick={() => onCardClicked()} />
-                </CheckWrapper>
+                {checkable &&
+                    <CheckWrapper>
+                        <CheckRender checked={checked} onClick={() => onCardChecked()} />
+                    </CheckWrapper>}
             </FlipWrapper>
             <FlipWrapper $rotate={false}>
                 <FlippedCard>
@@ -177,5 +184,8 @@ MiddleCard.propTypes = {
     flippable: PropTypes.bool,
     flip: PropTypes.bool,
     text: PropTypes.string,
-    author: PropTypes.string
+    author: PropTypes.string,
+    checkable: PropTypes.bool,
+    onCheck: PropTypes.func,
+    checked: PropTypes.bool
 };

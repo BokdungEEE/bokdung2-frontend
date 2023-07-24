@@ -114,6 +114,7 @@ const ButtonWrapper = styled.div`
 
 export default function CardSelectPage() {
     const types = ["course", "health", "love", "money", "promotion", "test", "lucky"];
+    const [checkedType, setCheckedType] = useState("");
 
     const [scroll, setScroll] = useState(0);
 
@@ -121,8 +122,11 @@ export default function CardSelectPage() {
         setScroll(e.target.scrollLeft);
     }
 
-    return <>
+    const onChecked = (name) => {
+        setCheckedType(name);
+    }
 
+    return <>
         <Background>
             <BackgroundCircle />
         </Background>
@@ -138,7 +142,7 @@ export default function CardSelectPage() {
             {
                 types.map((type, index) => (
                     <MiddleCardWrapper key={index} $activated={Math.round(scroll / 236) === index}>
-                        <MiddleCard type={type} flippable={false} />
+                        <MiddleCard type={type} flippable={false} checkable={true} checked={type === checkedType} onCheck={() => onChecked(type)} />
                     </MiddleCardWrapper>
 
                 ))
