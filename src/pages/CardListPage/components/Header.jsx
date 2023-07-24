@@ -2,6 +2,10 @@ import { styled } from "styled-components";
 
 import { ReactComponent as HelperIcon } from "../assets/helper.svg";
 import { ReactComponent as MenuIcon } from "../assets/menu.svg";
+import { ReactComponent as BackIcon } from "../assets/back.svg";
+
+import PropTypes from "prop-types";
+import { useNavigate } from "react-router";
 
 const HeaderWrapper = styled.div`
     z-index: 1000;
@@ -14,7 +18,7 @@ const HeaderWrapper = styled.div`
 
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: flex-start;
 
     backdrop-filter: blur(6px);
@@ -31,13 +35,40 @@ const MenuStyledIcon = styled(MenuIcon)`
     margin-top: 44px;
 `;
 
-export default function Header() {
+const BackStyledIcon = styled(BackIcon)`
+    margin-left: 11px;
+    margin-top: 44px;
+
+    display: ${(props) => props.$display ? "block" : "none"};
+`;
+
+const Blank = styled.div`
+    flex: 1;
+`;
+
+/**
+ * 
+ * @param {{backactivate: boolean, backurl: string}} param0 
+ * @returns 
+ */
+export default function Header({ backactivate, backurl }) {
+    const navigate = useNavigate();
+
     return (
         <>
             <HeaderWrapper>
-                <HelperStyledIcon />
-                <MenuStyledIcon />
+                <BackStyledIcon $display={backactivate} onClick={() => navigate(backurl)} />
+                <Blank />
+                <div>
+                    <HelperStyledIcon />
+                    <MenuStyledIcon />
+                </div>
             </HeaderWrapper>
         </>
     );
+}
+
+Header.propTypes = {
+    backactivate: PropTypes.bool,
+    backurl: PropTypes.string,
 }
