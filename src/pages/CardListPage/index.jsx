@@ -192,6 +192,7 @@ const ButtonWrapper = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: center;
+    pointer-events: ${(prop) => prop.$visible ? 'auto' : 'none'};
 
     opacity: ${(prop) => prop.$visible ? 1 : 0};
     transition: opacity 100ms ease-in-out;
