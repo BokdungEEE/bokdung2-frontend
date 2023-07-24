@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 import Header from "../CardListPage/components/Header";
-import LargeButton from "../CardListPage/components/LargeButton";
 import SmallCard from "../CardListPage/components/SmallCard";
+import { ReactComponent as KakaoIcon } from "./assets/kakao.svg";
 
 const Background = styled.div`
     position: fixed;
@@ -13,41 +13,23 @@ const Background = styled.div`
     background-color: #32363A;
 `;
 
-const TitleWrapper = styled.div`
-    font-family: "PyeongChangPeace";
-    font-weight: 700;
-    font-size: 32px;
-
-    width: 100vw;
-    margin-top: 120px;
-    text-align: center;
-
-    color: #DCE9F5;
-`;
-
 const DescriptionWrapper = styled.div`
     font-family: "PyeongChang";
     font-weight: 400;
     font-size: 15px;
 
     text-align: center;
+    margin-top: 120px;
 
     color: #DCE9F5;
 `;
 
-const ButtonWrapper = styled.div`
-    margin-top: 474px;
-    width: 100vw;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-`;
 
 const BackgroundCardWrapper = styled.div`
     position: fixed;
 
     top: 370px;
-    left: -25px;
+    left: calc((100vw - 375px) / 2 - 25px);
 
     display: flex;
     flex-direction: row;
@@ -61,19 +43,48 @@ const CardRowWrapper = styled.div`
     transform: translateY( ${(props) => props.$moveY}px );
 `;
 
-export default function LinkPage() {
+const LoginWrapper = styled.div`
+    margin-top: 522px;
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+`;
+
+const LoginBtn = styled.div`
+    width: 230px;
+    height: 52px;
+    background-color: #FEE500;
+
+    font-size: 18px;
+    font-weight: 400;
+    border-radius: 12px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    column-gap: 8px;
+    text-align: center;
+
+    font-family: "PyeongChang";
+`;
+
+export default function LoginPage() {
     return <Background>
         <Header />
-        <TitleWrapper>
-            2024 나의 운세
-        </TitleWrapper>
         <DescriptionWrapper>
-            새해를 맞아 친구에게 올해의 운세와 함께<br />
-            메시지를 보내주세요
+            운세카드를 주고받기 위해서는<br />
+            로그인이 필요합니다.
         </DescriptionWrapper>
-        <ButtonWrapper>
-            <LargeButton text="운세카드 보내기" />
-        </ButtonWrapper>
+
+        <LoginWrapper>
+            <LoginBtn>
+                <KakaoIcon />
+                카카오 로그인
+            </LoginBtn>
+        </LoginWrapper>
+
         <BackgroundCardWrapper>
             <CardRowWrapper>
                 <SmallCard type="love" />
