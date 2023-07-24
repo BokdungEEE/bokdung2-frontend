@@ -1,15 +1,15 @@
-import { HashRouter, Route, Routes } from "react-router-dom";
-// import CardListPage from "./pages/CardListPage";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import CardListPage from "./pages/CardListPage";
 import LinkPage from "./pages/LinkPage";
 
 function App() {
   return (
-    <HashRouter>
+    <BrowserRouter>
       <Routes>
-        {/* <Route index='/' element={CardListPage()} /> */}
-        <Route index='/link' element={LinkPage()} />
+        <Route path='/' element={CardListPage()} />
+        <Route path='/link' element={LinkPage()} />
       </Routes>
-    </HashRouter>
+    </BrowserRouter>
   );
 }
 

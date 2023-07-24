@@ -47,7 +47,7 @@ const BackgroundCardWrapper = styled.div`
     position: fixed;
 
     top: 370px;
-    left: calc((100vw - 375px) / 2 - 25px);
+    left: -25px;
 
     display: flex;
     flex-direction: row;

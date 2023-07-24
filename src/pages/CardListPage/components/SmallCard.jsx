@@ -46,7 +46,7 @@ export default function SmallCard({ type, children, onClick }) {
 }
 
 SmallCard.propTypes = {
-    type: PropTypes.oneOf(["course", "health", "love", "money", "promotion", "test"]).isRequired,
+    type: PropTypes.oneOf(["course", "health", "love", "money", "promotion", "test", "lucky"]).isRequired,
     name: PropTypes.string,
     onClick: PropTypes.func,
     children: PropTypes.node
