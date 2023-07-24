@@ -9,9 +9,9 @@ const ButtonWrapper = styled.div`
     align-items: center;
     flex-shrink: 0;
     border-radius: 30px;
-    background: var(--white, #DCE9F5);
+    background: ${props => props.$activated ? "#DCE9F5" : "#53565E"};
 
-    color: var(--blue, #6E8EFF);
+    color: ${props => props.$activated ? "#6E8EFF" : "#7A7F8D"};
     text-align: center;
     font-feature-settings: 'clig' off, 'liga' off;
 
@@ -25,18 +25,18 @@ const ButtonWrapper = styled.div`
 
 /**
  * 
- * @param {{text: string, onClick: ()=>void}} param0 
+ * @param {{text: string, onClick: ()=>void, activated: boolean}} param0 
  */
 export default function LargeButton({
-    text, onClick
+    text, onClick, activated = true
 }) {
-    return <ButtonWrapper onClick={() => onClick()}>
+    return <ButtonWrapper onClick={() => onClick()} $activated={activated}>
         {text}
     </ButtonWrapper>
 }
 
 LargeButton.propTypes = {
     text: PropTypes.string.isRequired,
-    onClick: PropTypes.func
-
+    onClick: PropTypes.func,
+    activated: PropTypes.bool
 }

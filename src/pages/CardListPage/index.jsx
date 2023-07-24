@@ -10,36 +10,8 @@ import { useShowTypeState } from "./states/showTypeState";
 import { useState } from "react";
 import { styled } from "styled-components";
 import LargeButton from "./components/LargeButton";
+import Bubble from "./components/Bubble";
 
-const BubbleWrapper = styled.div`
-    position: absolute;
-
-    top: 115px;
-    width: 100vw;
-
-    display: flex;
-
-    flex-direction: row;
-    justify-content: center;
-`
-
-const BackgroundBubble = styled.div`
-    width: 298px;
-    height: 298px;
-    flex-shrink: 0;
-
-    border-radius: 298px;
-    background: rgba(220, 233, 245, 0.04);
-    box-shadow: 0px 0px 36px 0px #DCE9F5 inset;
-
-    backdrop-filter: blur(30px);
-    -webkit-backdrop-filter: blur(30px);
-
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-`;
 
 const CardWrapper = styled.div`
     display: flex;
@@ -72,7 +44,7 @@ const RoundWrapper = styled.div`
     flex-direction: row;
         justify-content: center;
 
-    position: absolute;
+    position: fixed;
     overflow: hidden;
 
     top: 299px;
@@ -84,9 +56,13 @@ const BlueRounded = styled.div`
     width: 630px;
     height: 630px;
     flex-shrink: 0;
-    
+    background: radial-gradient(
+        closest-side,
+        rgba(110, 142, 255, 0.8) 0%,
+        rgba(110, 142, 255, 0) 100%
+    );
     border-radius: 630px;
-    background: var(--blue, #6E8EFF);
+    /* background: var(--blue, #6E8EFF); */
 
     overflow: hidden;
 `
@@ -99,6 +75,8 @@ const MiddleCardWrapper = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: center;
+    
+    pointer-events: ${(prop) => prop.$visible ? 'auto' : 'none'};
 
     opacity: ${(prop) => prop.$visible ? 1 : 0};
     transition: opacity 100ms ease-in-out;
@@ -113,11 +91,11 @@ const StyledCard = styled(Card)`
 const StyledCardGrid = styled(CardGrid)``;
 
 const TopBackground = styled.div`
-    position: absolute;
+    position: fixed;
     background-color: #32363A;
 
     width: 100vw;
-    height: 400px;
+    height: 100vh;
     
     z-index: -1;
 `;
@@ -192,9 +170,15 @@ const ButtonWrapper = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: center;
+    pointer-events: ${(prop) => prop.$visible ? 'auto' : 'none'};
 
     opacity: ${(prop) => prop.$visible ? 1 : 0};
     transition: opacity 100ms ease-in-out;
+`;
+
+const BubbleWrapper = styled.div`
+position: relative;
+    top: 115px;
 `;
 
 export default function CardListPage() {
@@ -238,8 +222,9 @@ export default function CardListPage() {
             <TopBackground />
 
             <Header />
+
             <BubbleWrapper>
-                <BackgroundBubble>
+                <Bubble>
                     <CardWrapper>
                         <StyledCard />
                         <StyledCardGrid />
@@ -249,8 +234,9 @@ export default function CardListPage() {
                         00은 물론 나머지 ~~<br />
                         들도 이루는 멋진 한 해가 되길 응원합니다
                     </DescriptionWrapper>
-                </BackgroundBubble>
+                </Bubble>
             </BubbleWrapper>
+
 
             <RoundWrapper>
                 <BlueRounded />

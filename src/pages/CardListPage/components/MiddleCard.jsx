@@ -11,6 +11,9 @@ import { ReactComponent as PromotionCard } from "../assets/middlecards/promotion
 import { ReactComponent as TestCard } from "../assets/middlecards/test.svg";
 import { ReactComponent as LuckyCard } from "../assets/middlecards/lucky.svg";
 
+import { ReactComponent as CheckedIcon } from "../assets/checked.svg";
+import { ReactComponent as CheckIcon } from "../assets/check.svg";
+
 const CardContainer = styled.div`
     width: 220px;
     height: 330px;
@@ -21,8 +24,6 @@ const CardContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-
-    position: absolute;
     
     transition: 400ms ease-in-out;
 
@@ -81,6 +82,30 @@ const AuthorWrapper = styled.div`
     justify-content: flex-end;
 `;
 
+/**
+ * 
+ * @param {{checked: boolean, onClick: ()=>void}} param0 
+ */
+const CheckRender = ({ checked, onClick }) => {
+    if (checked) {
+        return <CheckedIcon onClick={() => onClick()} />
+    }
+    else {
+        return <CheckIcon onClick={() => onClick()} />
+    }
+};
+
+const CheckWrapper = styled.div`
+    position: absolute;
+
+    left: 170px;
+    top: 280px;
+`;
+
+CheckRender.propTypes = {
+    checked: PropTypes.bool.isRequired,
+    onClick: PropTypes.func.isRequired
+};
 
 /**
  * 
@@ -111,10 +136,10 @@ UnflippedCardRender.propTypes = {
 
 /**
  * 
- * @param {{ type: "course" | "health" | "love" | "money" | "promotion" | "test" | "lucky", flippable: boolean, flip: boolean, text: string, author: string }} param0 
+ * @param {{ type: "course" | "health" | "love" | "money" | "promotion" | "test" | "lucky", flippable: boolean, flip: boolean, text: string, author: string, checkable: boolean, onCheck: (checked: boolean)=>void, checked: boolean }} param0 
  * @returns 
  */
-export default function MiddleCard({ type, flippable = true, flip = true, text, author }) {
+export default function MiddleCard({ type, flippable = true, flip = true, text, author, checkable = false, onCheck, checked }) {
     const [flipped, setFlipped] = useState(true);
 
     const onCardClicked = () => {
@@ -123,10 +148,21 @@ export default function MiddleCard({ type, flippable = true, flip = true, text, 
         }
     };
 
+    const onCardChecked = () => {
+        if (checkable) {
+            onCheck(!checked);
+        }
+    }
+
     return (
         <CardContainer onClick={() => onCardClicked()} $rotate={flippable ? flipped : flip}>
             <FlipWrapper $rotate={true}>
                 <UnflippedCardRender type={type} />
+
+                {checkable &&
+                    <CheckWrapper>
+                        <CheckRender checked={checked} onClick={() => onCardChecked()} />
+                    </CheckWrapper>}
             </FlipWrapper>
             <FlipWrapper $rotate={false}>
                 <FlippedCard>
@@ -144,9 +180,12 @@ export default function MiddleCard({ type, flippable = true, flip = true, text, 
 }
 
 MiddleCard.propTypes = {
-    type: PropTypes.oneOf(["course", "health", "love", "money", "promotion", "test"]).isRequired,
+    type: PropTypes.oneOf(["course", "health", "love", "money", "promotion", "test", "lucky"]).isRequired,
     flippable: PropTypes.bool,
     flip: PropTypes.bool,
     text: PropTypes.string,
-    author: PropTypes.string
+    author: PropTypes.string,
+    checkable: PropTypes.bool,
+    onCheck: PropTypes.func,
+    checked: PropTypes.bool
 };

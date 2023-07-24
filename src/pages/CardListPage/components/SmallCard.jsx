@@ -6,6 +6,7 @@ import { ReactComponent as LoveCard } from "../assets/smallcards/love.svg";
 import { ReactComponent as MoneyCard } from "../assets/smallcards/money.svg";
 import { ReactComponent as PromotionCard } from "../assets/smallcards/promotion.svg";
 import { ReactComponent as TestCard } from "../assets/smallcards/test.svg";
+import { ReactComponent as LuckyCard } from "../assets/smallcards/lucky.svg";
 
 /**
  * 
@@ -37,11 +38,15 @@ export default function SmallCard({ type, children, onClick }) {
         return <TestCard onClick={() => onClick()}>
             {children}
         </TestCard>
+    } else if (type == "lucky") {
+        return <LuckyCard onClick={() => onClick()}>
+            {children}
+        </LuckyCard>
     }
 }
 
 SmallCard.propTypes = {
-    type: PropTypes.oneOf(["course", "health", "love", "money", "promotion", "test"]).isRequired,
+    type: PropTypes.oneOf(["course", "health", "love", "money", "promotion", "test", "lucky"]).isRequired,
     name: PropTypes.string,
     onClick: PropTypes.func,
     children: PropTypes.node

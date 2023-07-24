@@ -1,14 +1,23 @@
-import { HashRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import CardListPage from "./pages/CardListPage";
+import LinkPage from "./pages/LinkPage";
+import LoginPage from "./pages/KakaoPage";
+import CardSelectPage from "./pages/CardSelectPage";
+import LetterPage from "./pages/LetterPage";
+import SentPage from "./pages/SentPage";
 
 function App() {
   return (
-    <HashRouter>
+    <BrowserRouter>
       <Routes>
-        <Route index='/' element={CardListPage()} />
-        {/* <Route index='/' element={SamplePage2} /> */}
+        <Route path='/' element={CardListPage()} />
+        <Route path='/link' element={LinkPage()} />
+        <Route path='/login' element={LoginPage()} />
+        <Route path="/cardselect" element={CardSelectPage()} />
+        <Route path="/letter" element={LetterPage()} />
+        <Route path="/sent" element={SentPage()} />
       </Routes>
-    </HashRouter>
+    </BrowserRouter>
   );
 }
 
