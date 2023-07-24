@@ -2,6 +2,7 @@ import { styled } from "styled-components";
 import Header from "../CardListPage/components/Header";
 import SmallCard from "../CardListPage/components/SmallCard";
 import { ReactComponent as KakaoIcon } from "./assets/kakao.svg";
+import { useNavigate } from "react-router";
 
 const Background = styled.div`
     position: fixed;
@@ -71,6 +72,8 @@ const LoginBtn = styled.div`
 `;
 
 export default function LoginPage() {
+    const navigate = useNavigate();
+
     return <Background>
         <Header />
         <DescriptionWrapper>
@@ -79,7 +82,7 @@ export default function LoginPage() {
         </DescriptionWrapper>
 
         <LoginWrapper>
-            <LoginBtn>
+            <LoginBtn onClick={() => navigate("/cardselect")}>
                 <KakaoIcon />
                 카카오 로그인
             </LoginBtn>

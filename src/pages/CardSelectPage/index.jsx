@@ -4,6 +4,7 @@ import Header from "../CardListPage/components/Header";
 import MiddleCard from "../CardListPage/components/MiddleCard";
 import { useState } from "react";
 import LargeButton from "../CardListPage/components/LargeButton";
+import { useNavigate } from "react-router";
 
 const Background = styled.div`
     position: fixed;
@@ -113,6 +114,7 @@ const ButtonWrapper = styled.div`
 `;
 
 export default function CardSelectPage() {
+    const navigate = useNavigate();
     const types = ["course", "health", "love", "money", "promotion", "test", "lucky"];
     const [checkedType, setCheckedType] = useState("");
 
@@ -160,7 +162,7 @@ export default function CardSelectPage() {
         </BallsWrapper>
 
         <ButtonWrapper>
-            <LargeButton activated={false} text="다음으로" />
+            <LargeButton activated={checkedType != ""} text="다음으로" onClick={() => navigate("/letter")} />
         </ButtonWrapper>
     </>
 }

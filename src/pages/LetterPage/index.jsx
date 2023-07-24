@@ -5,6 +5,7 @@ import { ReactComponent as FlipIcon } from "../CardListPage/assets/flip.svg";
 import LargeButton from "../CardListPage/components/LargeButton";
 import { useState } from "react";
 import LargeCard from "../CardListPage/components/LargeCard";
+import { useNavigate } from "react-router";
 
 const Background = styled.div`
     position: fixed;
@@ -141,7 +142,10 @@ const ContentInput = styled.textarea`
 `;
 
 export default function LetterPage() {
+    const navigate = useNavigate();
+
     const [flipped, setFlipped] = useState(false);
+    const [textContent, setTextContent] = useState("");
 
     const onClickFlip = () => {
         setFlipped(prevState => !prevState);
@@ -166,8 +170,12 @@ export default function LetterPage() {
                     <WriterLetterLimit>3/20</WriterLetterLimit>
                 </WriterWrapper>
                 <ContentWrapper>
-                    <ContentInput placeholder="메시지를 입력해주세요" />
-                    <RightAlign>ㅎ;</RightAlign>
+                    <ContentInput placeholder="메시지를 입력해주세요" onChange={
+                        (e) => {
+                            setTextContent(e.target.value);
+                        }
+                    } value={textContent} maxLength={200} />
+                    <RightAlign>{textContent.length}/200</RightAlign>
                 </ContentWrapper>
             </LargeCard>
         </MiddleCardsWrapper>
@@ -177,7 +185,7 @@ export default function LetterPage() {
         </FlipIconWrapper>
 
         <ButtonWrapper>
-            <LargeButton activated={false} text="다음으로" />
+            <LargeButton activated={textContent.length > 0} text="다음으로" onClick={() => navigate("/sent")} />
         </ButtonWrapper>
     </>
 }

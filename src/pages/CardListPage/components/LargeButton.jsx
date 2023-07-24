@@ -30,7 +30,11 @@ const ButtonWrapper = styled.div`
 export default function LargeButton({
     text, onClick, activated = true
 }) {
-    return <ButtonWrapper onClick={() => onClick()} $activated={activated}>
+    return <ButtonWrapper onClick={() => {
+        if (activated) {
+            onClick()
+        }
+    }} $activated={activated}>
         {text}
     </ButtonWrapper>
 }

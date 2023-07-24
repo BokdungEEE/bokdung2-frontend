@@ -2,6 +2,7 @@ import { styled } from "styled-components";
 import Header from "../CardListPage/components/Header";
 import LargeButton from "../CardListPage/components/LargeButton";
 import SmallCard from "../CardListPage/components/SmallCard";
+import { useNavigate } from "react-router";
 
 const Background = styled.div`
     position: fixed;
@@ -62,6 +63,8 @@ const CardRowWrapper = styled.div`
 `;
 
 export default function LinkPage() {
+    const navigate = useNavigate();
+
     return <Background>
         <Header />
         <TitleWrapper>
@@ -72,7 +75,7 @@ export default function LinkPage() {
             메시지를 보내주세요
         </DescriptionWrapper>
         <ButtonWrapper>
-            <LargeButton text="운세카드 보내기" />
+            <LargeButton text="운세카드 보내기" onClick={() => navigate("/login")} />
         </ButtonWrapper>
         <BackgroundCardWrapper>
             <CardRowWrapper>

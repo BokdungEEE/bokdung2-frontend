@@ -3,6 +3,7 @@ import Bubble from "../CardListPage/components/Bubble";
 import SmallCard from "../CardListPage/components/SmallCard";
 import LargeButton from "../CardListPage/components/LargeButton";
 import Header from "../CardListPage/components/Header";
+import { useNavigate } from "react-router";
 
 const Background = styled.div`
     position: fixed;
@@ -86,6 +87,8 @@ const ButtonWrapper = styled.div`
 `;
 
 export default function SentPage() {
+    const navigate = useNavigate();
+
     return <>
         <Header />
         <Background />
@@ -103,7 +106,7 @@ export default function SentPage() {
             운세카드를 무사히 전송했습니다
         </DescriptionWrapper>
         <ButtonWrapper>
-            <LargeButton text="내 페이지로 가기" />
+            <LargeButton text="내 페이지로 가기" onClick={() => navigate("/main")} />
         </ButtonWrapper>
     </>
 }
