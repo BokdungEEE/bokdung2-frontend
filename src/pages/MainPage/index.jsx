@@ -1,10 +1,8 @@
 import { styled } from "styled-components";
 import Header from "../CardListPage/components/Header";
-
-import MiddleCard from "../CardListPage/components/MiddleCard";
 import { useState } from "react";
-import LargeButton from "../CardListPage/components/LargeButton";
 import { useNavigate } from "react-router";
+import Bubble from "../CardListPage/components/Bubble";
 
 const Background = styled.div`
   position: fixed;
@@ -22,33 +20,6 @@ const Background = styled.div`
   background-color: #32363a;
 
   z-index: -1;
-`;
-
-const BackgroundCircle = styled.div`
-  width: 630px;
-  height: 630px;
-
-  border-radius: 630px;
-  background: radial-gradient(
-    50% 50% at 50% 50%,
-    rgba(220, 233, 245, 0.2) 0%,
-    rgba(220, 233, 245, 0) 100%
-  );
-`;
-
-const DescriptionWrapper = styled.div`
-  margin-top: 120px;
-  font-size: 15px;
-  font-weight: 400;
-  font-family: "PyeongChang";
-
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-
-  color: #dce9f5;
 `;
 
 const MiddleCardsWrapper = styled.div`
@@ -82,6 +53,34 @@ const MiddleCardWrapper = styled.div`
   transition: filter 0.1s ease-in-out;
 `;
 
+const RoundWrapper = styled.div`
+  width: 100vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+
+  position: fixed;
+  overflow: hidden;
+
+  top: 299px;
+  z-index: -1;
+`;
+
+const BlueRounded = styled.div`
+  width: 630px;
+  height: 630px;
+  flex-shrink: 0;
+  background: radial-gradient(
+    closest-side,
+    rgba(110, 142, 255, 0.8) 0%,
+    rgba(110, 142, 255, 0) 100%
+  );
+  border-radius: 630px;
+  /* background: var(--blue, #6E8EFF); */
+
+  overflow: hidden;
+`;
+
 const Ball = styled.div`
   width: 10px;
   height: 10px;
@@ -107,28 +106,14 @@ const BallsWrapper = styled.div`
   margin-top: 40px;
 `;
 
-const ButtonWrapper = styled.div`
-  width: 100vw;
-
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-
-  margin-top: 58px;
+const BubblerWrapper = styled.div`
+  position: fixed;
+  top: 257px;
 `;
 
 export default function CardSelectPage() {
-  const navigate = useNavigate();
-  const types = [
-    "course",
-    "health",
-    "love",
-    "money",
-    "promotion",
-    "test",
-    "lucky",
-  ];
-  const [checkedType, setCheckedType] = useState("");
+  //const navigate = useNavigate();
+  const types = ["course", "health"];
 
   const [scroll, setScroll] = useState(0);
 
@@ -136,23 +121,13 @@ export default function CardSelectPage() {
     setScroll(e.target.scrollLeft);
   };
 
-  const onChecked = (name) => {
-    setCheckedType(name);
-  };
-
   return (
     <>
-      <Background>
-        <BackgroundCircle />
-      </Background>
-
+      <Background />
+      <RoundWrapper>
+        <BlueRounded />
+      </RoundWrapper>
       <Header backactivate={true} backurl="/login" />
-
-      <DescriptionWrapper>
-        친구에게 메시지와 함께 보낼
-        <br />
-        운세카드를 선택해주세요.
-      </DescriptionWrapper>
 
       <MiddleCardsWrapper onScroll={(e) => onScrolled(e)}>
         {types.map((type, index) => (
@@ -160,13 +135,9 @@ export default function CardSelectPage() {
             key={index}
             $activated={Math.round(scroll / 236) === index}
           >
-            <MiddleCard
-              type={type}
-              flippable={false}
-              checkable={true}
-              checked={type === checkedType}
-              onCheck={() => onChecked(type)}
-            />
+            <BubblerWrapper>
+              <Bubble type={type}>{type}</Bubble>
+            </BubblerWrapper>
           </MiddleCardWrapper>
         ))}
       </MiddleCardsWrapper>
@@ -178,14 +149,6 @@ export default function CardSelectPage() {
           ))}
         </BallWrapper>
       </BallsWrapper>
-
-      <ButtonWrapper>
-        <LargeButton
-          activated={checkedType != ""}
-          text="다음으로"
-          onClick={() => navigate("/letter")}
-        />
-      </ButtonWrapper>
     </>
   );
 }
