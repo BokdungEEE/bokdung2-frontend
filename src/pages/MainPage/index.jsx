@@ -1,8 +1,9 @@
 import { styled } from "styled-components";
 import Header from "../CardListPage/components/Header";
 import { useState } from "react";
-import { useNavigate } from "react-router";
-import Bubble from "../CardListPage/components/Bubble";
+//import { useNavigate } from "react-router";
+import Bubble from "./Bubble";
+import LargeButton from "../CardListPage/components/LargeButton";
 
 const Background = styled.div`
   position: fixed;
@@ -23,7 +24,7 @@ const Background = styled.div`
 `;
 
 const MiddleCardsWrapper = styled.div`
-  margin-top: 84px;
+  margin-top: 30px;
   column-gap: 16px;
 
   padding-left: calc(50vw - 110px);
@@ -106,14 +107,31 @@ const BallsWrapper = styled.div`
   margin-top: 40px;
 `;
 
-const BubblerWrapper = styled.div`
-  position: fixed;
-  top: 257px;
+const SideWrapper = styled.div`
+  margin-top: 100px;
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+
+  margin-top: 180px;
+  width: 100vw;
+  z-index: 2;
+`;
+
+const ContentsDescription = styled.p`
+  font-family: PyeongChang;
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--white, #dce9f5);
+  text-align: center;
+  margin-bottom: 70px;
 `;
 
 export default function CardSelectPage() {
   //const navigate = useNavigate();
-  const types = ["course", "health"];
+  const types = ["12개", "8회"];
 
   const [scroll, setScroll] = useState(0);
 
@@ -128,20 +146,7 @@ export default function CardSelectPage() {
         <BlueRounded />
       </RoundWrapper>
       <Header backactivate={true} backurl="/login" />
-
-      <MiddleCardsWrapper onScroll={(e) => onScrolled(e)}>
-        {types.map((type, index) => (
-          <MiddleCardWrapper
-            key={index}
-            $activated={Math.round(scroll / 236) === index}
-          >
-            <BubblerWrapper>
-              <Bubble type={type}>{type}</Bubble>
-            </BubblerWrapper>
-          </MiddleCardWrapper>
-        ))}
-      </MiddleCardsWrapper>
-
+      <SideWrapper />
       <BallsWrapper>
         <BallWrapper>
           {types.map((type, index) => (
@@ -149,6 +154,27 @@ export default function CardSelectPage() {
           ))}
         </BallWrapper>
       </BallsWrapper>
+      <MiddleCardsWrapper onScroll={(e) => onScrolled(e)}>
+        {types.map((type, index) => (
+          <MiddleCardWrapper
+            key={index}
+            $activated={Math.round(scroll / 236) === index}
+          >
+            <ContentsDescription>
+              {index === 0
+                ? "내가 받은 카드 개수는?"
+                : "친구에게 카드를 보낼 수 있는 횟수는?"}
+            </ContentsDescription>
+            <Bubble type={type}>{type}</Bubble>
+          </MiddleCardWrapper>
+        ))}
+      </MiddleCardsWrapper>
+      <ButtonWrapper>
+        <LargeButton
+          text="내 링크 복사하기"
+          //onClick={() => navigate("/main")}
+        />
+      </ButtonWrapper>
     </>
   );
 }
