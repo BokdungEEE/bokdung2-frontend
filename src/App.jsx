@@ -6,6 +6,7 @@ import LoginPage from "./pages/KakaoPage";
 import CardSelectPage from "./pages/CardSelectPage";
 import LetterPage from "./pages/LetterPage";
 import SentPage from "./pages/SentPage";
+import MyPage from "./pages/MyPage";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <Route path="/cardselect" element={CardSelectPage()} />
       <Route path="/letter" element={LetterPage()} />
       <Route path="/sent" element={SentPage()} />
+      <Route path="/mypage" element={MyPage()} />
     </Routes>
   );
 }
