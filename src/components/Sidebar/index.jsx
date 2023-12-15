@@ -24,7 +24,7 @@ const ButtonWrapper = styled.div`
 
 const Button = styled.button`
   color: var(--black, #32363a);
-  font-family: PyeongChang Peace;
+  font-family: PyeongChangPeace;
   font-size: 20px;
   font-weight: 300;
   font-style: normal;
@@ -45,17 +45,28 @@ const Description = styled.p`
   margin-left: 30px;
 `;
 
+import PropTypes from "prop-types";
+import HelpModal from "../HelpModal";
+
 const Sidebar = ({ onClose }) => {
   return (
-    <Wrapper>
-      <CancelStyledIcon onClick={onClose} />
-      <ButtonWrapper>
-        <Button>로그아웃</Button>
-        <Button>내 페이지로 가기</Button>
-      </ButtonWrapper>
-      <Description>문의 : ???</Description>
-    </Wrapper>
+    <>
+      <Wrapper>
+        <CancelStyledIcon onClick={onClose} />
+        <ButtonWrapper>
+          <Button>샌드포춘이란?</Button>
+          <Button>로그아웃</Button>
+          <Button>내 페이지로 가기</Button>
+        </ButtonWrapper>
+        <Description>문의 : ???</Description>
+      </Wrapper>
+      <HelpModal />
+    </>
   );
+};
+
+Sidebar.propTypes = {
+  onClose: PropTypes.func.isRequired,
 };
 
 export default Sidebar;

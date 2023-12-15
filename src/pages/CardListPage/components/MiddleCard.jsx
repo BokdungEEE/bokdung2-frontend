@@ -136,15 +136,19 @@ UnflippedCardRender.propTypes = {
 
 /**
  * 
- * @param {{ type: "course" | "health" | "love" | "money" | "promotion" | "test" | "lucky", flippable: boolean, flip: boolean, text: string, author: string, checkable: boolean, onCheck: (checked: boolean)=>void, checked: boolean }} param0 
+ * @param {{ type: "course" | "health" | "love" | "money" | "promotion" | "test" | "lucky", flippable: boolean, flip: boolean, text: string, author: string, checkable: boolean, onCheck: (checked: boolean)=>void, checked: boolean, onCLick: ()=>void }} param0 
  * @returns 
  */
-export default function MiddleCard({ type, flippable = true, flip = true, text, author, checkable = false, onCheck, checked }) {
+export default function MiddleCard({ type, flippable = true, flip = true, text, author, checkable = false, onCheck, checked, onClick }) {
     const [flipped, setFlipped] = useState(true);
 
     const onCardClicked = () => {
         if (flippable) {
             setFlipped(prevState => !prevState);
+        }
+
+        if (onClick) {
+            onClick();
         }
     };
 
@@ -187,5 +191,6 @@ MiddleCard.propTypes = {
     author: PropTypes.string,
     checkable: PropTypes.bool,
     onCheck: PropTypes.func,
-    checked: PropTypes.bool
+    checked: PropTypes.bool,
+    onClick: PropTypes.func
 };

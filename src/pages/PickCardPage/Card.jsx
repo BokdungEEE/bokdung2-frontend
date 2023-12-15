@@ -9,7 +9,7 @@ const CardContainer = styled.div`
   position: relative;
   display: flex;
   flex-direction: row;
-  left: 85px;
+  left: calc(50% - 110px);
   flex: 0 0 auto;
 `;
 
@@ -52,6 +52,6 @@ export default function Card({ data, isChecked, handleClick }) {
 
 Card.propTypes = {
   data: PropTypes.arrayOf(PropTypes.number),
-  isChecked: PropTypes.arrayOf(PropTypes.bool),
+  isChecked: PropTypes.bool,
   handleClick: PropTypes.func,
 };

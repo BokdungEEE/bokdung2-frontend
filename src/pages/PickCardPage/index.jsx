@@ -62,7 +62,7 @@ const ButtonWrapper = styled.div`
   margin-top: 410px;
 `;
 
-export default function MyPage() {
+export default function PickCardPage() {
   const navigate = useNavigate();
   const [cardList] = useState([1, 2, 3]);
   const [isCardSelect, setisCardSelect] = useState(false);
@@ -97,7 +97,7 @@ export default function MyPage() {
         <LargeButton
           activated={isCardSelect != ""}
           text="선택 완료"
-          onClick={() => navigate("/main")}
+          onClick={() => navigate("/cardlist")}
         />
       </ButtonWrapper>
     </>

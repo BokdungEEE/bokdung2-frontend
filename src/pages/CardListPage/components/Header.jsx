@@ -8,6 +8,7 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router";
 import Sidebar from "../../../components/Sidebar";
+import { useHelpModal } from "../../../atoms/helpAtom";
 
 const HeaderWrapper = styled.div`
   z-index: 1000;
@@ -45,6 +46,7 @@ const MenuButton = styled.button`
 const BackStyledIcon = styled(BackIcon)`
   margin-left: 11px;
   margin-top: 44px;
+  cursor: pointer;
 
   display: ${(props) => (props.$display ? "block" : "none")};
 `;
@@ -76,6 +78,11 @@ const SideMenuWrapper = styled.div`
 export default function Header({ backactivate, backurl }) {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
+  const { openHelpModal } = useHelpModal();
+
+  const handleHelpButton = () => {
+    openHelpModal();
+  }
 
   const handleMenuButton = () => {
     setOpen((prev) => !prev);
@@ -94,7 +101,7 @@ export default function Header({ backactivate, backurl }) {
         />
         <Blank />
         <div>
-          <MenuButton>
+          <MenuButton onClick={handleHelpButton}>
             <HelperStyledIcon />
           </MenuButton>
           <MenuButton onClick={handleMenuButton}>
@@ -111,6 +118,6 @@ export default function Header({ backactivate, backurl }) {
 
 Header.propTypes = {
   backactivate: PropTypes.bool,
-  backurl: PropTypes.string,
+  backurl: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onClick: PropTypes.bool,
 };

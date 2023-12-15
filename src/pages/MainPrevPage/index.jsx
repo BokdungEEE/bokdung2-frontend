@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 import Header from "../CardListPage/components/Header";
-import { useState } from "react";
+import { useRef, useState } from "react";
 //import { useNavigate } from "react-router";
 import Bubble from "./Bubble";
 import LargeButton from "../CardListPage/components/LargeButton";
@@ -129,11 +129,15 @@ const ContentsDescription = styled.p`
   margin-bottom: 70px;
 `;
 
-export default function CardSelectPage() {
+export default function MainPrevPage() {
   //const navigate = useNavigate();
   const types = ["12개", "8회"];
 
   const [scroll, setScroll] = useState(0);
+  /**
+   * @type {React.MutableRefObject<HTMLDivElement>}
+   */
+  const wrapperRef = useRef();
 
   const onScrolled = (e) => {
     setScroll(e.target.scrollLeft);
@@ -154,11 +158,12 @@ export default function CardSelectPage() {
           ))}
         </BallWrapper>
       </BallsWrapper>
-      <MiddleCardsWrapper onScroll={(e) => onScrolled(e)}>
+      <MiddleCardsWrapper onScroll={(e) => onScrolled(e)} ref={wrapperRef}>
         {types.map((type, index) => (
           <MiddleCardWrapper
             key={index}
             $activated={Math.round(scroll / 236) === index}
+            onClick={() => wrapperRef.current.scrollTo({ left: index * 236, behavior: "smooth" })}
           >
             <ContentsDescription>
               {index === 0
@@ -168,11 +173,11 @@ export default function CardSelectPage() {
             <Bubble type={type}>{type}</Bubble>
           </MiddleCardWrapper>
         ))}
-      </MiddleCardsWrapper>
+      </MiddleCardsWrapper >
       <ButtonWrapper>
         <LargeButton
           text="내 링크 복사하기"
-          //onClick={() => navigate("/main")}
+        // onClick={() => navigate("/main")}
         />
       </ButtonWrapper>
     </>

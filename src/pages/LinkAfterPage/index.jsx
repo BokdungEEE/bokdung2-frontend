@@ -62,20 +62,20 @@ const CardRowWrapper = styled.div`
     transform: translateY( ${(props) => props.$moveY}px );
 `;
 
-export default function LinkPage() {
+export default function LinkAfterPage() {
     const navigate = useNavigate();
 
     return <Background>
         <Header />
         <TitleWrapper>
-            2024 나의 운세
+            샌드포춘
         </TitleWrapper>
         <DescriptionWrapper>
-            새해를 맞아 친구에게 올해의 운세와 함께<br />
-            메시지를 보내주세요
+            친구에게 운세카드를<br />
+            보낼 수 있는 기간이 아닙니다
         </DescriptionWrapper>
         <ButtonWrapper>
-            <LargeButton text="운세카드 보내기" onClick={() => navigate("/login")} />
+            <LargeButton text="내 페이지로 가기" onClick={() => navigate("/mainafter")} />
         </ButtonWrapper>
         <BackgroundCardWrapper>
             <CardRowWrapper>

@@ -1,23 +1,37 @@
 import { Route, Routes } from "react-router-dom";
 import CardListPage from "./pages/CardListPage";
 //import LinkPage from "./pages/LinkPage";
-import MainPage from "./pages/MainPage";
-import LoginPage from "./pages/KakaoPage";
+import LoginPage from "./pages/LoginPage";
 import CardSelectPage from "./pages/CardSelectPage";
 import LetterPage from "./pages/LetterPage";
 import SentPage from "./pages/SentPage";
-import MyPage from "./pages/MyPage";
+import LinkPrevPage from "./pages/LinkPrevPage";
+import LinkAfterPage from "./pages/LinkAfterPage";
+import OpenPage from "./pages/OpenPage";
+import MainPrevPage from "./pages/MainPrevPage";
+import MainAfterPage from "./pages/MainAfterPage";
+import IntroducePage from "./pages/IntroducePage";
+import PickCardPage from "./pages/PickCardPage";
 
 function App() {
   return (
     <Routes>
-      <Route path="/main" element={CardListPage()} />
-      <Route path="/" element={MainPage()} />
+      <Route path="/linkprev" element={LinkPrevPage()} />
+      <Route path="/linkafter" element={LinkAfterPage()} />
+
       <Route path="/login" element={LoginPage()} />
-      <Route path="/cardselect" element={CardSelectPage()} />
-      <Route path="/letter" element={LetterPage()} />
+
+      <Route path="/open" element={OpenPage()} />
+
+      <Route path="/mainprev" element={MainPrevPage()} />
+      <Route path="/mainafter" element={MainAfterPage()} />
+
+      <Route path="/introduce" element={IntroducePage()} />
       <Route path="/sent" element={SentPage()} />
-      <Route path="/mypage" element={MyPage()} />
+      <Route path="/cardlist" element={CardListPage()} />
+      <Route path="/letter" element={LetterPage()} />
+      <Route path="/pickcard" element={PickCardPage()} />
+      <Route path="/cardselect" element={CardSelectPage()} />
     </Routes>
   );
 }

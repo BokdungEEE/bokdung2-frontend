@@ -2,7 +2,7 @@ import { styled } from "styled-components";
 import Header from "../CardListPage/components/Header";
 
 import MiddleCard from "../CardListPage/components/MiddleCard";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import LargeButton from "../CardListPage/components/LargeButton";
 import { useNavigate } from "react-router";
 
@@ -131,6 +131,10 @@ export default function CardSelectPage() {
   const [checkedType, setCheckedType] = useState("");
 
   const [scroll, setScroll] = useState(0);
+  /**
+   * @type {React.MutableRefObject<HTMLDivElement>}
+   */
+  const wrapperRef = useRef();
 
   const onScrolled = (e) => {
     setScroll(e.target.scrollLeft);
@@ -139,6 +143,11 @@ export default function CardSelectPage() {
   const onChecked = (name) => {
     setCheckedType(name);
   };
+
+  const setCardIndex = (index) => {
+    wrapperRef.current.scrollTo({ left: index * 236, behavior: "smooth" });
+    setScroll(index * 236);
+  }
 
   return (
     <>
@@ -154,7 +163,9 @@ export default function CardSelectPage() {
         운세카드를 선택해주세요.
       </DescriptionWrapper>
 
-      <MiddleCardsWrapper onScroll={(e) => onScrolled(e)}>
+      <MiddleCardsWrapper onScroll={(e) => {
+        onScrolled(e)
+      }} ref={wrapperRef}>
         {types.map((type, index) => (
           <MiddleCardWrapper
             key={index}
@@ -166,6 +177,9 @@ export default function CardSelectPage() {
               checkable={true}
               checked={type === checkedType}
               onCheck={() => onChecked(type)}
+              onClick={() => {
+                setCardIndex(index);
+              }}
             />
           </MiddleCardWrapper>
         ))}
