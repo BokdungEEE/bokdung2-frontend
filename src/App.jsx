@@ -12,26 +12,24 @@ import MainPrevPage from "./pages/MainPrevPage";
 import MainAfterPage from "./pages/MainAfterPage";
 import IntroducePage from "./pages/IntroducePage";
 import PickCardPage from "./pages/PickCardPage";
+import { AuthCallbackPage } from "./pages/AuthCallbackPage";
 
 function App() {
   return (
     <Routes>
-      <Route path="/linkprev" element={LinkPrevPage()} />
-      <Route path="/linkafter" element={LinkAfterPage()} />
-
-      <Route path="/login" element={LoginPage()} />
-
-      <Route path="/open" element={OpenPage()} />
-
-      <Route path="/mainprev" element={MainPrevPage()} />
-      <Route path="/mainafter" element={MainAfterPage()} />
-
-      <Route path="/introduce" element={IntroducePage()} />
-      <Route path="/sent" element={SentPage()} />
-      <Route path="/cardlist" element={CardListPage()} />
-      <Route path="/letter" element={LetterPage()} />
-      <Route path="/pickcard" element={PickCardPage()} />
-      <Route path="/cardselect" element={CardSelectPage()} />
+      <Route path="/linkprev/:userIdx" element={<LinkPrevPage />} />
+      <Route path="/linkafter" element={<LinkAfterPage />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/open" element={<OpenPage />} />
+      <Route path="/mainprev" element={<MainPrevPage />} />
+      <Route path="/mainafter" element={<MainAfterPage />} />
+      <Route path="/introduce" element={<IntroducePage />} />
+      <Route path="/sent" element={<SentPage />} />
+      <Route path="/cardlist" element={<CardListPage />} />
+      <Route path="/letter" element={<LetterPage />} />
+      <Route path="/pickcard" element={<PickCardPage />} />
+      <Route path="/cardselect" element={<CardSelectPage />} />
+      <Route path="/authcallback" element={<AuthCallbackPage />} />
     </Routes>
   );
 }

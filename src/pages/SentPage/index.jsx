@@ -75,6 +75,8 @@ const DescriptionWrapper = styled.div`
 `;
 
 const ButtonWrapper = styled.div`
+  margin-top: 546px;
+  
   display: flex;
   justify-content: center;
 
@@ -103,7 +105,7 @@ export default function SentPage() {
       <ButtonWrapper>
         <LargeButton
           text="내 페이지로 가기"
-          onClick={() => navigate("/main")}
+          onClick={() => navigate("/mainprev")}
         />
       </ButtonWrapper>
     </>

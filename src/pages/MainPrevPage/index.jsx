@@ -1,9 +1,11 @@
 import { styled } from "styled-components";
 import Header from "../CardListPage/components/Header";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 //import { useNavigate } from "react-router";
 import Bubble from "./Bubble";
 import LargeButton from "../CardListPage/components/LargeButton";
+import { BokdungStroage } from "../../lib/storage";
+import { getUserCounts } from "../../lib/user";
 
 const Background = styled.div`
   position: fixed;
@@ -131,7 +133,7 @@ const ContentsDescription = styled.p`
 
 export default function MainPrevPage() {
   //const navigate = useNavigate();
-  const types = ["12개", "8회"];
+  const [types, setTypes] = useState([]);
 
   const [scroll, setScroll] = useState(0);
   /**
@@ -141,6 +143,23 @@ export default function MainPrevPage() {
 
   const onScrolled = (e) => {
     setScroll(e.target.scrollLeft);
+  };
+
+  useEffect(() => {
+    const storage = BokdungStroage.loadStroage();
+    const accessToken = storage.accessToken;
+
+    (async () => {
+      const { received, chance } = await getUserCounts(accessToken);
+      setTypes([received + "개", chance + "회"]);
+
+    })();
+  }, []);
+
+  const onClickPaste = () => {
+    const storage = BokdungStroage.loadStroage();
+    const myuuid = storage.userIdx;
+
   };
 
   return (

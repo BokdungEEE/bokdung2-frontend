@@ -73,9 +73,6 @@ const ConfirmButton = styled.div`
 `;
 
 export default function HelpModal() {
-    useEffect(() => {
-        console.log(helpState);
-    });
     const {
         helpState,
         closeHelpModal

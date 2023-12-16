@@ -2,7 +2,9 @@ import { styled } from "styled-components";
 import Header from "../CardListPage/components/Header";
 import SmallCard from "../CardListPage/components/SmallCard";
 import { ReactComponent as KakaoIcon } from "./assets/kakao.svg";
-import { useNavigate } from "react-router";
+import { getKakaoLoginUrl } from "../../lib/login";
+import { useEffect } from "react";
+import { useFlow } from "../../hooks/useFlow";
 
 const Background = styled.div`
     position: fixed;
@@ -83,7 +85,16 @@ const LoginBtn = styled.div`
 `;
 
 export default function OpenPage() {
-    const navigate = useNavigate();
+    const { setAsMainFlow } = useFlow();
+
+    useEffect(() => { setAsMainFlow(); }, []);
+
+    const onClickLogin = () => {
+        (async () => {
+            const kakaoLink = await getKakaoLoginUrl();
+            location.href = kakaoLink;
+        })();
+    }
 
     return <Background>
         <Header />
@@ -98,7 +109,7 @@ export default function OpenPage() {
 
 
         <LoginWrapper>
-            <LoginBtn onClick={() => navigate("/mainprev")}>
+            <LoginBtn onClick={onClickLogin}>
                 <KakaoIcon />
                 카카오 로그인
             </LoginBtn>

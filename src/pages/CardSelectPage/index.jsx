@@ -5,6 +5,7 @@ import MiddleCard from "../CardListPage/components/MiddleCard";
 import { useRef, useState } from "react";
 import LargeButton from "../CardListPage/components/LargeButton";
 import { useNavigate } from "react-router";
+import { useCardSelect } from "../../hooks/useCardSelect";
 
 const Background = styled.div`
   position: fixed;
@@ -131,6 +132,7 @@ export default function CardSelectPage() {
   const [checkedType, setCheckedType] = useState("");
 
   const [scroll, setScroll] = useState(0);
+  const { setSelected } = useCardSelect();
   /**
    * @type {React.MutableRefObject<HTMLDivElement>}
    */
@@ -142,6 +144,7 @@ export default function CardSelectPage() {
 
   const onChecked = (name) => {
     setCheckedType(name);
+    setSelected(name);
   };
 
   const setCardIndex = (index) => {

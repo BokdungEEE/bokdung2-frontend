@@ -6,6 +6,7 @@ import LargeButton from "../CardListPage/components/LargeButton";
 import { ReactComponent as TopIcon } from "./assets/TopIcon.svg";
 import { ReactComponent as BottomIcon } from "./assets/BottomIcon.svg";
 import { ReactComponent as MiddleIcon } from "./assets/MiddleIcon.svg";
+import { useNavigate } from "react-router-dom";
 
 
 const Background = styled.div`
@@ -107,6 +108,7 @@ const ImgWrapper = styled.div`
 `;
 
 export default function IntroducePage() {
+    const navigate = useNavigate();
 
     return (
         <>
@@ -148,8 +150,8 @@ export default function IntroducePage() {
             </ContentsWrapper>
             <ButtonWrapper>
                 <LargeButton
-                    text="내 링크 복사하기"
-                // onClick={() => navigate("/main")}
+                    text="내 페이지로 가기"
+                    onClick={() => navigate("/mainprev")}
                 />
             </ButtonWrapper>
         </>

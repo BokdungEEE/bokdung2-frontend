@@ -4,6 +4,9 @@ import Header from "../CardListPage/components/Header";
 import LargeButton from "../CardListPage/components/LargeButton";
 import { ReactComponent as GlassImg } from "./assets/GlassImage.svg";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { BokdungStroage } from "../../lib/storage";
+import { getUserCounts } from "../../lib/user";
 
 
 const Background = styled.div`
@@ -23,7 +26,6 @@ const Background = styled.div`
 
   z-index: -1;
 `;
-
 
 const RoundWrapper = styled.div`
   width: 100vw;
@@ -52,6 +54,7 @@ const BlueRounded = styled.div`
 
   overflow: hidden;
 `;
+
 const SideWrapper = styled.div`
   margin-top: 100px;
 `;
@@ -108,6 +111,17 @@ const GlassWrapper = styled.div`
 
 export default function MainAfterPage() {
     const navigate = useNavigate();
+    const [count, setCount] = useState(0);
+
+    useEffect(() => {
+        (async () => {
+
+            const storage = BokdungStroage.loadStroage();
+
+            const { received } = await getUserCounts(storage.accessToken);
+            setCount(received);
+        })();
+    }, []);
 
     return (
         <>
@@ -124,7 +138,7 @@ export default function MainAfterPage() {
                     올해 나의 운세를 확인해보세요!
                 </Top>
                 <Bottom>
-                    받은 카드 개수 : 38개
+                    받은 카드 개수 : {count}개
                 </Bottom>
             </ContentsWrapper>
             <GlassWrapper>

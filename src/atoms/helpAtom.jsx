@@ -2,7 +2,7 @@ import { atom, useRecoilState } from "recoil";
 
 const helpAtom = atom({
     key: "helpAtom",
-    default: true,
+    default: false,
 });
 
 export const useHelpModal = () => {

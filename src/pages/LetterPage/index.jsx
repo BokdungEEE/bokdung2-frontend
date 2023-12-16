@@ -3,9 +3,14 @@ import Header from "../CardListPage/components/Header";
 import { ReactComponent as FlipIcon } from "../CardListPage/assets/flip.svg";
 
 import LargeButton from "../CardListPage/components/LargeButton";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import LargeCard from "../CardListPage/components/LargeCard";
 import { useNavigate } from "react-router";
+import { useCardSelect } from "../../hooks/useCardSelect";
+import { getUserName } from "../../lib/user";
+import { useLinkUser } from "../../hooks/useLinkUser";
+import { sendPost } from "../../lib/post";
+import { BokdungStroage } from "../../lib/storage";
 
 const Background = styled.div`
     position: fixed;
@@ -144,11 +149,32 @@ const ContentInput = styled.textarea`
 export default function LetterPage() {
     const navigate = useNavigate();
 
+    const { selected } = useCardSelect();
+
     const [flipped, setFlipped] = useState(false);
     const [textContent, setTextContent] = useState("");
+    const [userName, setUserName] = useState("");
+    const { getUserIdx } = useLinkUser();
 
     const onClickFlip = () => {
         setFlipped(prevState => !prevState);
+    }
+
+    useEffect(() => {
+        (async () => {
+            const userIdx = getUserIdx();
+            const fetchedUserName = await getUserName(userIdx);
+
+            setUserName(fetchedUserName);
+        })();
+    }, []);
+
+    const onClickSend = async () => {
+        const userIdx = getUserIdx();
+        const storage = BokdungStroage.loadStroage();
+        await sendPost(userIdx, 1, textContent, storage.accessToken);
+
+        navigate("/sent");
     }
 
     return <>
@@ -164,9 +190,9 @@ export default function LetterPage() {
         </DescriptionWrapper>
 
         <MiddleCardsWrapper>
-            <LargeCard type={"course"} flippable={false} flip={flipped}>
+            <LargeCard type={selected} flippable={false} flip={flipped}>
                 <WriterWrapper>
-                    <div>보내는 사람 : 박땡땡</div>
+                    <div>보내는 사람 : {userName}</div>
                     <WriterLetterLimit>3/20</WriterLetterLimit>
                 </WriterWrapper>
                 <ContentWrapper>
@@ -185,7 +211,7 @@ export default function LetterPage() {
         </FlipIconWrapper>
 
         <ButtonWrapper>
-            <LargeButton activated={textContent.length > 0} text="다음으로" onClick={() => navigate("/sent")} />
+            <LargeButton activated={textContent.length > 0} text="전송하기" onClick={onClickSend} />
         </ButtonWrapper>
     </>
 }

@@ -3,6 +3,10 @@ import Header from "../CardListPage/components/Header";
 import LargeButton from "../CardListPage/components/LargeButton";
 import SmallCard from "../CardListPage/components/SmallCard";
 import { useNavigate } from "react-router";
+import { useEffect } from "react";
+import { getLinkedUserFromLink, isUserExists } from "../../lib/user";
+import { useFlow } from "../../hooks/useFlow";
+import { useLinkUser } from "../../hooks/useLinkUser";
 
 const Background = styled.div`
     position: fixed;
@@ -64,6 +68,25 @@ const CardRowWrapper = styled.div`
 
 export default function LinkPrevPage() {
     const navigate = useNavigate();
+    const { setAsLinkFlow } = useFlow();
+    const { setUserIdx } = useLinkUser();
+
+    useEffect(() => {
+        (async () => {
+            const userIdx = getLinkedUserFromLink();
+            const exists = await isUserExists(userIdx);
+
+            if (!exists) {
+                navigate("/mainprev");
+            }
+
+            setUserIdx(userIdx);
+        })();
+
+        setAsLinkFlow();
+
+        return () => { };
+    }, []);
 
     return <Background>
         <Header />
